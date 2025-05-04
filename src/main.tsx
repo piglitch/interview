@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
-import Landing from './pages/landing/Landing';
-import { AuthenticationForm } from './components/Loginpage/loginpage';
+import { AuthenticationForm } from './pages/Loginpage/loginpage';
+// import Landing from './pages/landing/Landing';
+import { Landing } from './pages/landing/Landing';
+import { Products } from './pages/Products/Products';
+
 
 export const routes = [
 	{
@@ -18,6 +21,10 @@ export const routes = [
 			{
 				path: '/log-in',
 				element: <AuthenticationForm />
+			},
+			{
+				path: '/products',
+				element: <Products />
 			}
 		]
 	}

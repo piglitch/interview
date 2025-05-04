@@ -31,6 +31,7 @@
 		"zustand": "^4.3.2"
 	},
 	"devDependencies": {
+		"@tabler/icons-react": "^3.31.0",
 		"@types/react": "^18.2.0",
 		"@types/react-dom": "^18.2.0",
 		"typescript": "^5.0.4",
