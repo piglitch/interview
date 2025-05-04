@@ -110,13 +110,13 @@ export const mockProducts: Product[] = [
         title: 'Product 11 Title',
         image: imageUrl,
     },
-    {
-        id: 12,
-        name: 'Product 12',
-        description: 'This is the description for Product 12.',
-        price: '$120',
-        discount: '65% off',
-        title: 'Product 12 Title',
-        image: imageUrl,
-    },
+    // {
+    //     id: 12,
+    //     name: 'Product 12',
+    //     description: 'This is the description for Product 12.',
+    //     price: '$120',
+    //     discount: '65% off',
+    //     title: 'Product 12 Title',
+    //     image: imageUrl,
+    // },
 ];

@@ -1,0 +1,22 @@
+.root {
+  background-color: var(--background-color,rgb(255, 255, 255));
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color, #f1f3f5);
+}
+  
+.control {
+  &::before {
+    display: none;
+  }
+}
+
+.label {
+  &,
+  &:hover {
+    &[data-active] {
+      color: black;
+      background: linear-gradient(90deg, var(--active-background-color-start, red), var(--active-background-color-end, orange));
+      border-radius: full;
+    }
+  }
+}

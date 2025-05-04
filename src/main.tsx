@@ -7,6 +7,7 @@ import { AuthenticationForm } from './pages/Loginpage/loginpage';
 // import Landing from './pages/landing/Landing';
 import { Landing } from './pages/landing/Landing';
 import { Products } from './pages/Products/Products';
+import { ProductItem } from './components/productItem/productItem';
 
 
 export const routes = [
@@ -25,6 +26,14 @@ export const routes = [
 			{
 				path: '/products',
 				element: <Products />
+			},
+			{
+				path: '/products/category',
+				element: <Products />
+			},
+			{
+				path: '/products/:id',
+				element: <ProductItem />
 			}
 		]
 	}
