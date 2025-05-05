@@ -1,6 +1,6 @@
 import { useProductStore } from "../store/app.store";
 
-export async function fetchProducts() {
+export async function fetchProductsByCategory() {
     const { category } = useProductStore();
     try {
         const response = await fetch(`https://fakestoreapi.in/api/products/category?type=${category}`);

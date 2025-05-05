@@ -27,6 +27,7 @@ export function Products() {
     const searchText = useProductStore((state) => state.searchText);
 
     useEffect(() => {
+        console.log(isAuthLoaded);
         if (isAuthLoaded) {
             console.log("auth loaded: ", isAuthLoaded);
             if (!isLoggedIn) {
@@ -44,8 +45,8 @@ export function Products() {
                 } 
 
                 const productsFromApi = await fetchProducts(path);
-                setProducts(productsFromApi);
-                setFilteredProducts(productsFromApi);
+                setProducts(productsFromApi.products);
+                setFilteredProducts(productsFromApi.products);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }

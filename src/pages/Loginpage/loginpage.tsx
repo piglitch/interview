@@ -41,7 +41,7 @@ export function AuthenticationForm(props: PaperProps) {
         const { email, password } = form.values;
 
         if (type === 'register') {
-            const { error } = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
@@ -54,10 +54,9 @@ export function AuthenticationForm(props: PaperProps) {
                 console.error('Error during registration:', error);
             } else {
                 useAppStore.setState({
-                    userId: email,
-                    userName: form.values.name,
-                    email: email,
+                    user: data.user,
                     isLoggedIn: true,
+                    isAuthLoaded: true,
                 });
                 navigate('/log-in');
                 // Navigate('/log-in');
@@ -71,9 +70,8 @@ export function AuthenticationForm(props: PaperProps) {
                 alert(error.message);
             } else {
                 useAppStore.setState({
-                    userId: data.user.id,
-                    userName: data.user.user_metadata.name,
-                    email: email,
+                    user: data.user,
+                    isAuthLoaded: true,
                     isLoggedIn: true,
                 });
                 navigate('/');
@@ -90,24 +88,6 @@ export function AuthenticationForm(props: PaperProps) {
                 <Text size="lg" fw={500}>
                     Welcome to Script Assist, {type} with
                 </Text>
-
-                {/* <Group grow mb="md" mt="md">
-                    <GoogleButton
-                        radius="xl"
-                        onClick={async () => {
-                            const { error } = await supabase.auth.signInWithOAuth({
-                                provider: 'google',
-                            });
-                            if (error) {
-                                alert(error.message);
-                            }
-                        }}
-                    >
-                        Google
-                    </GoogleButton>
-                </Group> */}
-
-                {/* <Divider label="Or continue with email" labelPosition="center" my="lg" /> */}
 
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <Stack>
