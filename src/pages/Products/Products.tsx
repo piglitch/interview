@@ -60,7 +60,7 @@ export function Products() {
         }
         console.log(products.map((product) => product.name));
         const filtered = products.filter((product) =>
-          product.description.toLowerCase().includes(searchText.toLowerCase())
+          product.title.toLowerCase().includes(searchText.toLowerCase())
         );
         if (filtered.length < 1) {
             console.log('No products found');
@@ -78,7 +78,7 @@ export function Products() {
     
     return (
         <>
-            {isAuthLoaded || isLoggedIn ? (
+            {isLoggedIn && products.length > 0 ? (
                 <div className={classes.wrapper}>
                     <div className={classes.productFilter}>
                         <div><ProductFilter /></div>

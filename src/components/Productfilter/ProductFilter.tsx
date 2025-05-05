@@ -27,6 +27,10 @@ export function ProductFilter() {
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
     setCategory(selectedCategory);
+    if (value === 'all') {
+      navigate('/products');
+      return;
+    }
     navigate(`/products/category?type=${value}`);
     console.log('Selected category:', value);
   };
