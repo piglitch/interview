@@ -1,6 +1,7 @@
 .wrapper {
     position: relative;
     box-sizing: border-box;
+    margin-top: 60px; /* Adjust this value to match the height of your fixed navbar */
 }
 
 .productFilter{
