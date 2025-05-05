@@ -5,6 +5,7 @@ import { useAppStore, useProductStore } from '../../store/app.store';
 import { useNavigate } from 'react-router-dom';
 import { ProductFilter } from '../../components/Productfilter/ProductFilter';
 import { fetchProducts } from '../../functions/fetchProducts';
+import { Searchbar } from '../../components/Searchbar/SearchBar';
 
 interface Product {
     id: number;
@@ -59,7 +60,10 @@ export function Products() {
         <>
             {isAuthLoaded || isLoggedIn ? (
                 <div className={classes.wrapper}>
-                    <div className={classes.productFilter}><ProductFilter /></div>
+                    <div className={classes.productFilter}>
+                        <div><ProductFilter /></div>
+                        <div><Searchbar /></div>
+                    </div>
                     <div className={classes.products}>
                         {products.map((product) => (
                             <Card key={product.id} withBorder radius="md" className={classes.card}>
@@ -81,12 +85,12 @@ export function Products() {
                                     <Group spacing={30}>
                                         <div>
                                             <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
-                                                {product.price}
+                                                ${product.price}
                                             </Text>
                                         </div>
 
-                                        <Button radius="xl" style={{ flex: 1 }}>
-                                            Buy now
+                                        <Button radius="xl" style={{ flex: 1 }} onClick={() => handleProductClick(product)}>
+                                            Details
                                         </Button>
                                     </Group>
                                 </Card.Section>
