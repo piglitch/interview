@@ -18,8 +18,9 @@ interface CardProps {
 }
 
 function Card({ id, image, title, category, description, price, discount }: CardProps) {
+    const navigate = useNavigate();
     const handleProductClick = (product: Product) => {
-        window.location.href = `/products/${product.id}`;
+        navigate(`/products/${product.id}`);
     };
     return (
         <Paper
@@ -48,13 +49,15 @@ export function ProductCarousel({ product }:{ product: Product}) {
             try {
                 const path = `/category?type=${product.category}`;
                 const productsFromApi = await fetchProducts(path);
-                setData(productsFromApi.products);
+                const filteredPdts = productsFromApi.products.filter((pdt: Product) => pdt.id !== product.id )
+                console.log('filtered items: ', filteredPdts, product.id);
+                setData(filteredPdts);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         }
         fetchProductsFromApi();
-    }, [])
+    }, [product])
 
     const theme = useMantineTheme();
     const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);

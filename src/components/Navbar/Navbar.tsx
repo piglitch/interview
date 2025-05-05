@@ -8,7 +8,7 @@ import { supabase } from '../../supabase/supabase';
 const NavBar: React.FC = () => {
 
     const navigate = useNavigate();
-    const { userName, isLoggedIn, clearSession } = useAppStore();
+    const { isLoggedIn, clearSession } = useAppStore();
     const SignOutHandler = async() => {
         let { error } = await supabase.auth.signOut();
         if (error) {    
@@ -22,11 +22,11 @@ const NavBar: React.FC = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">Script Assist</Link>
+                <Link to="/">ShopEase</Link>
             </div>
             <ul className="navbar-links">
                 <div>
-                    <Link to="/about">About</Link>
+                    <a href="#about">About</a>
                 </div>
                 <div>
                     <Link to="/contact">Contact</Link>

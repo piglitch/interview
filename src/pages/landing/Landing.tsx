@@ -3,10 +3,12 @@ import { Button, Container, Group, Text } from '@mantine/core';
 import classes from './landing.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../store/app.store';
+import { About } from '../../components/About/About';
+import { Footer } from '../../components/Footer/Footer';
 
 export function Landing() {
 	const navigate = useNavigate();
-	const { userName, isLoggedIn } = useAppStore();
+	const { isLoggedIn } = useAppStore();
 	const handleProductPage = () => {
 		if(isLoggedIn) {
 			navigate('/products');
@@ -42,6 +44,12 @@ export function Landing() {
 					</Button>
 				</Group>
 			</Container>
+			<div id='about'>
+				<About />
+			</div>
+			<div>
+				<Footer />
+			</div>
 		</div>
 	);
 }

@@ -1,0 +1,22 @@
+.footer {
+    margin-top: 120px;
+    border-top: 1px solid #d3d3d3; /* light gray */
+}
+  
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px; /* equivalent to var(--mantine-spacing-xl) */
+    padding-bottom: 24px; /* equivalent to var(--mantine-spacing-xl) */
+  
+    @media (max-width: 576px) { /* equivalent to $mantine-breakpoint-xs */
+      flex-direction: column;
+    }
+}
+  
+.links {
+    @media (max-width: 576px) { /* equivalent to $mantine-breakpoint-xs */
+      margin-top: 16px; /* equivalent to var(--mantine-spacing-md) */
+    }
+}

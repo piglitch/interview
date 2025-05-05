@@ -9,6 +9,7 @@ import { Landing } from './pages/landing/Landing';
 import { Products } from './pages/Products/Products';
 import { ProductItem } from './components/productItem/productItem';
 import AuthInit from './auth/Auth';
+import { ContactUs } from './pages/ContactUs/ContactUs';
 
 
 export const routes = [
@@ -35,6 +36,10 @@ export const routes = [
 			{
 				path: '/products/:id',
 				element: <ProductItem />
+			},
+			{
+				path: '/contact',
+				element: <ContactUs />
 			}
 		]
 	}
