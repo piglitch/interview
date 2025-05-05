@@ -22,8 +22,10 @@ interface Product {
 interface ProductStore {
     product: Product | null;
     category: string;
+    searchText: string;
     setProduct: (product: Product) => void;
     setCategory: (category: string) => void;
+    setSearchText: (text: string) => void;
 }
 
 export const useAppStore = create<UserSession>((set) => ({
@@ -45,8 +47,11 @@ export const useAppStore = create<UserSession>((set) => ({
 export const useProductStore = create<ProductStore>((set) => ({
     product: null,
     category: 'All',
+    searchText: '',
     setProduct: (product: Product) =>
         set({ product }),
     setCategory: (category: string) =>
         set({ category }),
+    setSearchText: (text: string) =>
+        set({ searchText: text  })
 }));

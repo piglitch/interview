@@ -1,18 +1,23 @@
+import { useState } from 'react';
 import { TextInput, TextInputProps } from '@mantine/core';
+import { useProductStore } from '../../store/app.store';
 
 export function Searchbar(props: TextInputProps) {
+  const searchText = useProductStore((state) => state.searchText);
+  const setSearchText = useProductStore((state) => state.setSearchText);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
+
   return (
     <TextInput
       radius="xl"
       size="md"
       placeholder="Search products"
       rightSectionWidth={42}
-    //   icon={<IconSearch size={18} stroke={1.5} />}
-    //   rightSection={
-    //     <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-    //       <IconArrowRight size={18} stroke={1.5} />
-    //     </ActionIcon>
-    //   }
+      value={searchText}
+      onChange={handleChange}
       {...props}
     />
   );

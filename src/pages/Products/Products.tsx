@@ -19,10 +19,12 @@ interface Product {
 
 export function Products() {
     const [products, setProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const isLoggedIn = useAppStore((state) => state.isLoggedIn)
     const isAuthLoaded = useAppStore((state) => state.isAuthLoaded)
     const { category } = useProductStore();
     const navigate = useNavigate();
+    const searchText = useProductStore((state) => state.searchText);
 
     useEffect(() => {
         if (isAuthLoaded) {
@@ -43,6 +45,7 @@ export function Products() {
 
                 const productsFromApi = await fetchProducts(path);
                 setProducts(productsFromApi);
+                setFilteredProducts(productsFromApi);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -51,11 +54,28 @@ export function Products() {
         fetchProductsFromApi();
     }, [isLoggedIn, category, navigate, isAuthLoaded]);
 
+    useEffect(() => {
+        if (products.length === 0) {
+            return;
+        }
+        console.log(products.map((product) => product.name));
+        const filtered = products.filter((product) =>
+          product.description.toLowerCase().includes(searchText.toLowerCase())
+        );
+        if (filtered.length < 1) {
+            console.log('No products found');
+            setFilteredProducts(products);    
+            return;        
+        }
+        setFilteredProducts(filtered);
+    }, [searchText]);
+      
+
     const handleProductClick = (product: Product) => {
         // setProduct(product);
         navigate(`/products/${product.id}`);
     };
-
+    
     return (
         <>
             {isAuthLoaded || isLoggedIn ? (
@@ -65,7 +85,7 @@ export function Products() {
                         <div><Searchbar /></div>
                     </div>
                     <div className={classes.products}>
-                        {products.map((product) => (
+                        {filteredProducts.map((product) => (
                             <Card key={product.id} withBorder radius="md" className={classes.card}>
                                 <Card.Section className={classes.imageSection} onClick={() => handleProductClick(product)}>
                                     <Image src={product.image} alt={product.name} />
