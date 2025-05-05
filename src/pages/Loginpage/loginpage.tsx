@@ -13,7 +13,6 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { upperFirst, useToggle } from '@mantine/hooks';
-// import { GoogleButton } from './googleButton';
 import { useAppStore } from '../../store/app.store';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabase';
@@ -59,7 +58,6 @@ export function AuthenticationForm(props: PaperProps) {
                     isAuthLoaded: true,
                 });
                 navigate('/log-in');
-                // Navigate('/log-in');
             }
         } else {
             const { data, error } = await supabase.auth.signInWithPassword({
@@ -75,9 +73,6 @@ export function AuthenticationForm(props: PaperProps) {
                     isLoggedIn: true,
                 });
                 navigate('/');
-                console.log('Login successful:', data);
-                console.log('User:', data.user.user_metadata.name);
-                // alert('Login successful!');
             }
         }
     };
