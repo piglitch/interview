@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Badge, Button, Card, Center, Group, Image, Text } from '@mantine/core';
+import { Badge, Button, Card, Center, Group, Image, Loader, Text } from '@mantine/core';
 import classes from './products.module.css';
-import { mockProducts } from '../../functions/mockData';
 import { useAppStore, useProductStore } from '../../store/app.store';
 import { useNavigate } from 'react-router-dom';
 import { ProductFilter } from '../../components/Productfilter/ProductFilter';
@@ -19,29 +18,21 @@ interface Product {
 
 export function Products() {
     const [products, setProducts] = useState<Product[]>([]);
-    const { isLoggedIn } = useAppStore();
+    const isLoggedIn = useAppStore((state) => state.isLoggedIn)
+    const isAuthLoaded = useAppStore((state) => state.isAuthLoaded)
     const { category } = useProductStore();
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     async function fetchProducts() {
-    //         try {
-    //             const response = await fetch('https://fakestoreapi.in/api/products');
-    //             const data = await response.json();
-    //             setProducts(data.products);
-    //         } catch (error) {
-    //             console.error('Error fetching products:', error);
-    //         }
-    //     }
-
-    //     fetchProducts();
-    // }, []);
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/log-in');
-            return;
+        if (isAuthLoaded) {
+            console.log("auth loaded: ", isAuthLoaded);
+            if (!isLoggedIn) {
+                console.log("not logged in: ", isLoggedIn);
+                navigate('/log-in');
+                return;
+            }
         }
-
+        
         async function fetchProductsFromApi() {
             try {
                 let path = '';
@@ -57,7 +48,7 @@ export function Products() {
         }
 
         fetchProductsFromApi();
-    }, [isLoggedIn, category, navigate]);
+    }, [isLoggedIn, category, navigate, isAuthLoaded]);
 
     const handleProductClick = (product: Product) => {
         // setProduct(product);
@@ -65,41 +56,49 @@ export function Products() {
     };
 
     return (
-        <div className={classes.wrapper}>
-            <div className={classes.productFilter}><ProductFilter /></div>
-            <div className={classes.products}>
-                {products.map((product) => (
-                    <Card key={product.id} withBorder radius="md" className={classes.card}>
-                        <Card.Section className={classes.imageSection} onClick={() => handleProductClick(product)}>
-                            <Image src={product.image} alt={product.name} />
-                        </Card.Section>
+        <>
+            {isAuthLoaded || isLoggedIn ? (
+                <div className={classes.wrapper}>
+                    <div className={classes.productFilter}><ProductFilter /></div>
+                    <div className={classes.products}>
+                        {products.map((product) => (
+                            <Card key={product.id} withBorder radius="md" className={classes.card}>
+                                <Card.Section className={classes.imageSection} onClick={() => handleProductClick(product)}>
+                                    <Image src={product.image} alt={product.name} />
+                                </Card.Section>
 
-                        <Group position="apart" mt="md">
-                            <div>
-                                <Text fw={500}>{product.name}</Text>
-                                <Text fz="xs" c="dimmed">
-                                    {product.title}
-                                </Text>
-                            </div>
-                            <Badge variant="outline">{product.discount}</Badge>
-                        </Group>
+                                <Group position="apart" mt="md">
+                                    <div>
+                                        <Text fw={500}>{product.name}</Text>
+                                        <Text fz="xs" c="dimmed">
+                                            {product.title}
+                                        </Text>
+                                    </div>
+                                    <Badge variant="outline">{product.discount}</Badge>
+                                </Group>
 
-                        <Card.Section className={classes.section}>
-                            <Group spacing={30}>
-                                <div>
-                                    <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
-                                        {product.price}
-                                    </Text>
-                                </div>
+                                <Card.Section className={classes.section}>
+                                    <Group spacing={30}>
+                                        <div>
+                                            <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
+                                                {product.price}
+                                            </Text>
+                                        </div>
 
-                                <Button radius="xl" style={{ flex: 1 }}>
-                                    Buy now
-                                </Button>
-                            </Group>
-                        </Card.Section>
-                    </Card>
-                ))}
-            </div>
-        </div>
+                                        <Button radius="xl" style={{ flex: 1 }}>
+                                            Buy now
+                                        </Button>
+                                    </Group>
+                                </Card.Section>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <Center style={{ height: '100vh' }}>
+                    <Loader />
+                </Center>
+            )}
+        </>
     );
 }

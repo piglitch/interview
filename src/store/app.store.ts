@@ -1,4 +1,13 @@
+import { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
+
+interface UserSession {
+    user: User | null
+    isAuthLoaded: boolean
+    isLoggedIn: boolean
+    setSession: (user: User | null) => void
+    clearSession: () => void
+}
 
 interface Product {
     id: number;
@@ -9,16 +18,7 @@ interface Product {
     title: string;
     image: string;
 }
-
-interface UserSession {
-    userId: string | null;
-    userName: string | null;
-    email: string | null;
-    isLoggedIn: boolean;
-    setSession: (userId: string) => void;
-    clearSession: () => void;
-}
-
+  
 interface ProductStore {
     product: Product | null;
     category: string;
@@ -27,15 +27,20 @@ interface ProductStore {
 }
 
 export const useAppStore = create<UserSession>((set) => ({
-    userId: null,
-    userName: null,
-    email: null,
+    user: null,
+    isAuthLoaded: false,
     isLoggedIn: false,
-    setSession: (userId) =>
-        set({ userId, isLoggedIn: true }),
+    setSession: (user) =>
+        set({
+        user,
+        isLoggedIn: !!user
+        }),
     clearSession: () =>
-        set({ userId: null, isLoggedIn: false }),
-}));
+        set({
+        user: null,
+        isLoggedIn: false
+    })
+}))
 
 export const useProductStore = create<ProductStore>((set) => ({
     product: null,

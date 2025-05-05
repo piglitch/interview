@@ -8,6 +8,7 @@ import { AuthenticationForm } from './pages/Loginpage/loginpage';
 import { Landing } from './pages/landing/Landing';
 import { Products } from './pages/Products/Products';
 import { ProductItem } from './components/productItem/productItem';
+import AuthInit from './auth/Auth';
 
 
 export const routes = [
@@ -53,7 +54,9 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
+			<AuthInit>
+				<RouterProvider router={router} />
+			</AuthInit>
 		</QueryClientProvider>
 	</StrictMode>
 );
